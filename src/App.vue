@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-    hello vue-cli
-    <!-- 调用Element UI组件 -->
-    <el-row>
-      <el-button type="primary">主要按钮</el-button>
-    </el-row>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -13,6 +9,10 @@ export default {
   components: {}
 };
 </script>
-
+  
 <style>
+* {
+  padding: 0;
+  margin: 0;
+}
 </style>
