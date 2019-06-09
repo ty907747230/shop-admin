@@ -7,8 +7,10 @@ import ElementUI from "element-ui";
 
 // 2.引入组件
 import "element-ui/lib/theme-chalk/index.css";
-import Admin from "./pages/Admin.vue"
-import Login from "./pages/Login.vue"
+import Admin from "./pages/Admin.vue";
+import Login from "./pages/Login.vue";
+import CategoryList from "./pages/CategoryList.vue";
+import GoodList from "./pages/GoodList.vue";
 
 //引入路由
 import VueRouter from "vue-router"
@@ -20,8 +22,12 @@ Vue.use(Login);
 
 //配置路由
 const routes=[
-  {path:"/login",component:Login},
-  {path:"/",component:Admin}
+  {path:"/login",component:Login,meta:"登录"},
+  {path:"/",redirect:"/admin/goodlist"},
+  {path:"/admin",component:Admin,meta:"后台管理",children:[
+    {path:"goodlist",component:GoodList,meta:"商品列表"},
+    {path:"categorylist",component:CategoryList,meta:"栏目管理"}
+  ]}
 ]
 
 //创建路由实例

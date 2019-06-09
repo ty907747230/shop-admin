@@ -8,7 +8,9 @@
         <Header @click="handleChangeShow"></Header>
       </el-header>
       <el-main>
-        <Mianbao></Mianbao>Main
+        <Mianbao></Mianbao>
+        <!-- 路由子组件占位符 -->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -37,7 +39,8 @@ export default {
     handleChangeShow() {
       this.isShow = !this.isShow;
     }
-  }
+  },
+  
 };
 </script>
 
