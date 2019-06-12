@@ -3,7 +3,7 @@
     <!-- 按钮与搜索框一行显示 -->
     <el-row type="flex" justify="space-between" class="goodtop">
       <div>
-        <el-button>新增</el-button>
+        <el-button @click="handleToGoodAdd">新增</el-button>
         <el-button type="danger" @click="handleDeleteMore">删除</el-button>
       </div>
       <div>
@@ -24,14 +24,19 @@
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="标题" width="300">
         <!-- 通过运行模板能推出scope.row就是那一行的数据 -->
-        <template slot-scope="scope">{{ scope.row.title }}</template>
+        <template slot-scope="scope">
+          <el-row type="flex" align="middle">
+            <img :src="scope.row.imgurl" class="goods-img">
+            <div>{{scope.row.title}}</div>
+          </el-row>
+        </template>
       </el-table-column>
       <!-- 显示数据的另一种方法,prop就是data的数据 -->
       <el-table-column prop="categoryname" label="类型" width="120"></el-table-column>
       <el-table-column prop="sell_price" label="价格" width="120" show-overflow-tooltip></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
           <!-- 第一参数$index是当前数据在页面中的索引,第二个是当前按钮所在行的数据 -->
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
@@ -71,6 +76,14 @@ export default {
     this.getGoodList();
   },
   methods: {
+    //编辑按钮点击事件
+    handleEdit(data){
+      this.$router.push(`/admin/goodedit/${data.id}`)
+    },
+    //新增商品按钮点击事件
+    handleToGoodAdd() {
+      this.$router.push("/admin/goodadd");
+    },
     //封装请求商品列表数据并渲染页面
     getGoodList() {
       this.$axios({
@@ -79,6 +92,7 @@ export default {
         }&pageSize=${this.pageSize}&searchvalue=${this.searchValue}`,
         method: "GET"
       }).then(res => {
+        // console.log(res);
         //请求成功渲染
         if (res.status == 200) {
           const data = res.data;
@@ -95,8 +109,10 @@ export default {
         url: ` http://localhost:8899/admin/goods/del/${ids}`,
         method: "GET"
       }).then(res => {
+        const { message, status } = res.data;
+    
         //删除成功
-        if (res.status === 200) {
+        if (status === 0) {
           //重新发送请求刷新页面
           this.getGoodList();
           //并在页面进行提示
@@ -104,8 +120,8 @@ export default {
             message: "删除成功",
             type: "success"
           });
-        }else{
-            this.$message.error(message);
+        } else {
+          this.$message.error(message);
         }
       });
     },
@@ -162,7 +178,11 @@ export default {
 </script>
 
 <style scoped>
-.goodtop {
-  margin: 20px 0;
+.goods-img {
+  width: 60px;
+  height: 60px;
+  /*表示元素压缩的倍数，如果是0，表示不会被挤压*/
+  flex-shrink: 0;
+  margin-right: 5px;
 }
 </style>

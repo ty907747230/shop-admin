@@ -41,5 +41,6 @@ export default {
 .mianbao {
   padding-bottom: 10px;
   border-bottom: 1px #ddd solid;
+  margin-bottom: 20px;
 }
 </style>
