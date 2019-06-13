@@ -53,6 +53,10 @@ export default {
             const { message, status } = res.data;
             //登录成功
             if(status===0){
+              //  console.log(message);
+              //获取仓库数据
+              this.$store.commit("setUser",message);
+             
                 this.$router.push("/")
             }
             //登录失败

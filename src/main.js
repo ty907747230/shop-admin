@@ -13,6 +13,7 @@ import CategoryList from "./pages/CategoryList.vue";
 import GoodList from "./pages/GoodList.vue";
 import GoodAdd from "./pages/GoodAdd.vue";
 import GoodEdit from "./pages/GoodEdit.vue";
+import store from "./store/index"
 
 //引入路由
 import VueRouter from "vue-router";
@@ -84,5 +85,7 @@ Vue.prototype.$axios = axios;
 new Vue({
   render: h => h(App),
   //挂载路由
-  router
+  router,
+  //挂载vuex
+  store
 }).$mount("#app");
